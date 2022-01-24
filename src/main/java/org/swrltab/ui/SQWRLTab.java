@@ -1,6 +1,7 @@
 package org.swrltab.ui;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.protege.editor.core.ProtegeApplication;
 import org.protege.editor.owl.model.event.EventType;
 import org.protege.editor.owl.model.event.OWLModelManagerChangeEvent;
 import org.protege.editor.owl.model.event.OWLModelManagerListener;
@@ -16,10 +17,11 @@ import org.swrlapi.ui.dialog.SWRLRuleEngineDialogManager;
 import org.swrlapi.ui.model.SQWRLQueryEngineModel;
 import org.swrlapi.ui.view.queries.SQWRLQueriesView;
 import org.swrltab.core.ProtegeIRIResolver;
-import org.swrltab.core.SWRLBuiltInLibraryFactoryPlugin;
 import org.swrltab.core.SWRLBuiltInLibraryFactoryLoader;
+import org.swrltab.core.SWRLBuiltInLibraryFactoryPlugin;
 
 import java.awt.*;
+import java.io.File;
 import java.util.Set;
 
 public class SQWRLTab extends OWLWorkspaceViewsTab
@@ -27,6 +29,8 @@ public class SQWRLTab extends OWLWorkspaceViewsTab
   private static final Logger log = LoggerFactory.getLogger(SQWRLTab.class);
 
   private static final long serialVersionUID = 1L;
+
+  private static final File pluginsFolder = new File(System.getProperty(ProtegeApplication.BUNDLE_DIR_PROP));
 
   private SQWRLQueryEngineModel sqwrlQueryEngineModel;
   private SQWRLQueriesView queriesView;
@@ -77,6 +81,8 @@ public class SQWRLTab extends OWLWorkspaceViewsTab
 
         // Create a SQWRL query engine
         SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(activeOntology, iriResolver);
+
+        queryEngine.loadExternalSWRLBuiltInLibraries(pluginsFolder);
 
         SWRLBuiltInLibraryFactoryLoader loader = new SWRLBuiltInLibraryFactoryLoader();
         Set<SWRLBuiltInLibraryFactoryPlugin> swrlBuiltInLibraryProtegePlugins = loader.getPlugins();
