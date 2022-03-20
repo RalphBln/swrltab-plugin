@@ -323,6 +323,8 @@
               org.eclipse.aether.*;resolution:=optional,
               org.exolab.castor.xml.*;resolution:=optional,
               org.junit.*;resolution:=optional,
+              de.fuberlin.csw.aspectowl.owlapi.model,
+              de.fuberlin.csw.aspectowl.owlapi.protege,
               *
             </Import-Package>
    	  </instructions>
